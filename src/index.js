@@ -46,8 +46,14 @@ class Remarkable extends React.Component {
   }
 
   createMarkdown(options, plugins) {
-    return plugins.reduce((md, plugin) => {
-      return md.use(plugin);
+    return plugins.reduce((md, p) => {
+      var plugin = p;
+      var options;
+      if (Array.isArray(p)) {
+        plugin = p[0];
+        options = p[1];
+      }
+      return md.use(plugin, options);
     }, new Markdown(options));
   }
 }
